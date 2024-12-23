@@ -4,32 +4,33 @@ PATH_TO_BACKUP="/Users/guilhermemonteiro/Library/CloudStorage/GoogleDrive-guilhe
 
 TS=$(date +%s) # get current timestamp
 
-PATH_TO_BACKUP_TS="$PATH_TO_BACKUP/tmp/$TS"
-# mkdir "$PATH_TO_BACKUP_TS"
+PATH_TO_BACKUP_TS="$PATH_TO_BACKUP/tmp"
+mkdir "$PATH_TO_BACKUP_TS"
 
-# # Recreate local dir, for DEV
-# rm -r "gtnh"; mkdir "gtnh"
-# PATH_TO_BACKUP_TS="gtnh"
+rm -vr backup_tmp; mkdir -v "backup_tmp"
 
-#Save a copy from local files, before overwriting with new files
-cp -r "$PATH_TO_MC/saves" "$PATH_TO_BACKUP_TS"
-cp -r "$PATH_TO_MC/journeymap" "$PATH_TO_BACKUP_TS"
-cp -r "$PATH_TO_MC/visualprospecting" "$PATH_TO_BACKUP_TS"
-cp -r "$PATH_TO_MC/TCNodeTracker" "$PATH_TO_BACKUP_TS"
-cp -r "$PATH_TO_MC/schematics" "$PATH_TO_BACKUP_TS"
-cp -r "$PATH_TO_MC/screenshots" "$PATH_TO_BACKUP_TS"
-cp -r "$PATH_TO_MC/resourcepacks" "$PATH_TO_BACKUP_TS"
-cp "$PATH_TO_MC/localconfig.cfg" "$PATH_TO_BACKUP_TS"
-cp "$PATH_TO_MC/options.txt" "$PATH_TO_BACKUP_TS"
-cp "$PATH_TO_MC/BotaniaVars.dat" "$PATH_TO_BACKUP_TS"
+#Save a copy of local files, before overwriting with new files
+cp -r "$PATH_TO_MC/saves" "backup_tmp"
+cp -r "$PATH_TO_MC/journeymap" "backup_tmp"
+cp -r "$PATH_TO_MC/visualprospecting" "backup_tmp"
+cp -r "$PATH_TO_MC/TCNodeTracker" "backup_tmp"
+cp -r "$PATH_TO_MC/schematics" "backup_tmp"
+cp -r "$PATH_TO_MC/screenshots" "backup_tmp"
+cp -r "$PATH_TO_MC/resourcepacks" "backup_tmp"
+cp "$PATH_TO_MC/localconfig.cfg" "backup_tmp"
+cp "$PATH_TO_MC/options.txt" "backup_tmp"
+cp "$PATH_TO_MC/BotaniaVars.dat" "backup_tmp"
+
+# Zip it and send it to cloud
+zip -vr "$TS.zip" "backup_tmp"
+cp -v "$TS.zip" "$PATH_TO_BACKUP_TS"
+
+rm -v "$TS.zip"; rm -vr backup_tmp
 
 # Get the latest backup version
 LATEST_BACKUP=$(ls "$PATH_TO_BACKUP/push" | tail -n1)
 PATH_TO_LATEST_BACKUP="$PATH_TO_BACKUP/push/$LATEST_BACKUP"
 
-# Pull the most recent version from backup
-echo $PATH_TO_LATEST_BACKUP
-# yes | cp -rf "$PATH_TO_LATEST_BACKUP/saves" "gtnh-01"
-# yes | cp -rf "$PATH_TO_LATEST_BACKUP/journeymap" "gtnh-01"
-# rsync -a --delete "$PATH_TO_LATEST_BACKUP/saves/" "gtnh-01/"
-yes | cp -r -f -v "$PATH_TO_LATEST_BACKUP/saves" "gtnh-01/saves"
+# Unzip directly to .minecraft
+ln -s . "$PATH_TO_MC/backup" && unzip -o "$PATH_TO_LATEST_BACKUP" -d "$PATH_TO_MC/"
+rm "$PATH_TO_MC/backup"

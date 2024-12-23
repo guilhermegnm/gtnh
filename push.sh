@@ -4,23 +4,24 @@ PATH_TO_BACKUP="/Users/guilhermemonteiro/Library/CloudStorage/GoogleDrive-guilhe
 
 TS=$(date +%s) # get current timestamp
 
-PATH_TO_BACKUP_TS="$PATH_TO_BACKUP/push/$TS"
+PATH_TO_BACKUP_TS="$PATH_TO_BACKUP/push"
 mkdir "$PATH_TO_BACKUP_TS"
 
-# # Recreate local dir, for DEV
-# rm -r "gtnh"; mkdir "gtnh"
-# PATH_TO_BACKUP_TS="gtnh"
+rmdir -vr backup; mkdir -v "backup"
 
-cp -vr "$PATH_TO_MC/saves" "$PATH_TO_BACKUP_TS"
-cp -vr "$PATH_TO_MC/journeymap" "$PATH_TO_BACKUP_TS"
-cp -vr "$PATH_TO_MC/visualprospecting" "$PATH_TO_BACKUP_TS"
-cp -vr "$PATH_TO_MC/TCNodeTracker" "$PATH_TO_BACKUP_TS"
-cp -vr "$PATH_TO_MC/schematics" "$PATH_TO_BACKUP_TS"
-cp -vr "$PATH_TO_MC/screenshots" "$PATH_TO_BACKUP_TS"
-cp -vr "$PATH_TO_MC/resourcepacks" "$PATH_TO_BACKUP_TS"
-cp -v "$PATH_TO_MC/localconfig.cfg" "$PATH_TO_BACKUP_TS"
-cp -v "$PATH_TO_MC/options.txt" "$PATH_TO_BACKUP_TS"
-cp -v "$PATH_TO_MC/BotaniaVars.dat" "$PATH_TO_BACKUP_TS"
+cp -r "$PATH_TO_MC/saves" "backup"
+cp -r "$PATH_TO_MC/journeymap" "backup"
+cp -r "$PATH_TO_MC/visualprospecting" "backup"
+cp -r "$PATH_TO_MC/TCNodeTracker" "backup"
+cp -r "$PATH_TO_MC/schematics" "backup"
+cp -r "$PATH_TO_MC/screenshots" "backup"
+cp -r "$PATH_TO_MC/resourcepacks" "backup"
+cp "$PATH_TO_MC/localconfig.cfg" "backup"
+cp "$PATH_TO_MC/options.txt" "backup"
+cp "$PATH_TO_MC/BotaniaVars.dat" "backup"
 
-var=$(ls "$PATH_TO_BACKUP" | tail -n1)
-echo $var
+zip -vr "$TS.zip" "backup"
+
+cp -v "$TS.zip" "$PATH_TO_BACKUP_TS"
+
+rm -v "$TS.zip"; rmdir -vr backup
