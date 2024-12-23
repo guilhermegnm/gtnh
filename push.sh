@@ -1,13 +1,12 @@
-PATH_TO_MC="/Users/guilhermemonteiro/Library/Application Support/PrismLauncher/instances/GT New Horizons 2.7.0/.minecraft"
-
-PATH_TO_BACKUP="/Users/guilhermemonteiro/Library/CloudStorage/GoogleDrive-guilherme.gn.monteiro@gmail.com/O meu disco/backups/gtnh-backups"
+# Referencing paths from file
+. ./paths.sh
 
 TS=$(date +%s) # get current timestamp
 
 PATH_TO_BACKUP_TS="$PATH_TO_BACKUP/push"
 mkdir "$PATH_TO_BACKUP_TS"
 
-rmdir -vr backup; mkdir -v "backup"
+rm -vr backup; mkdir -v "backup"
 
 cp -r "$PATH_TO_MC/saves" "backup"
 cp -r "$PATH_TO_MC/journeymap" "backup"
@@ -24,4 +23,4 @@ zip -vr "$TS.zip" "backup"
 
 cp -v "$TS.zip" "$PATH_TO_BACKUP_TS"
 
-rm -v "$TS.zip"; rmdir -vr backup
+rm -v "$TS.zip"; rm -vr backup

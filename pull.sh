@@ -1,6 +1,5 @@
-PATH_TO_MC="/Users/guilhermemonteiro/Library/Application Support/PrismLauncher/instances/GT New Horizons 2.7.0/.minecraft"
-
-PATH_TO_BACKUP="/Users/guilhermemonteiro/Library/CloudStorage/GoogleDrive-guilherme.gn.monteiro@gmail.com/O meu disco/backups/gtnh-backups"
+# Referencing paths from file
+. ./paths.sh
 
 TS=$(date +%s) # get current timestamp
 
