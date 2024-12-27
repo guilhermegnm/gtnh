@@ -29,7 +29,14 @@ rm -v "$TS.zip"; rm -vr backup_tmp
 # Get the latest backup version
 LATEST_BACKUP=$(ls "$PATH_TO_BACKUP/push" | tail -n1)
 PATH_TO_LATEST_BACKUP="$PATH_TO_BACKUP/push/$LATEST_BACKUP"
+echo $PATH_TO_LATEST_BACKUP
 
-# Unzip directly to .minecraft
-ln -s . "$PATH_TO_MC/backup" && unzip -o "$PATH_TO_LATEST_BACKUP" -d "$PATH_TO_MC/"
-rm "$PATH_TO_MC/backup"
+# Unzip archive to .minecraft
+unzip -o "$PATH_TO_LATEST_BACKUP" -d "$PATH_TO_MC/"; echo "unzip"
+
+# Move backup contents from archive to .minecraft
+yes | cp -rf "$PATH_TO_MC/backup/"* "$PATH_TO_MC/";
+rm -r "$PATH_TO_MC/backup/"
+
+
+read rn1
